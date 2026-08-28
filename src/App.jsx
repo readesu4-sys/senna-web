@@ -392,4 +392,30 @@ export default function App() {
 
             <div className="rounded-2xl p-4 flex items-center justify-between" style={glass}>
               <span className="text-xs" style={{ color: textSoft }}>Mode</span>
-              <button onClick={() => setDark((d) => !d)} className="press rounded-full p-2" style={{ background: "rgba(128,128,128,
+              <button onClick={() => setDark((d) => !d)} className="press rounded-full p-2" style={{ background: "rgba(128,128,128,0.15)" }}>
+                {dark ? <Moon size={16} /> : <Sun size={16} />}
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Floating glass bottom nav */}
+      <div className="w-full max-w-md px-6 pb-6 pt-3 relative z-10">
+        <div className="flex justify-around items-center rounded-full py-2 px-2" style={{ ...glass, boxShadow: "0 8px 30px rgba(0,0,0,0.25)" }}>
+          {[
+            { id: "chat", icon: MessageCircle },
+            { id: "memory", icon: Brain },
+            { id: "settings", icon: Settings },
+          ].map(({ id, icon: Icon }) => (
+            <button key={id} onClick={() => setTab(id)} className="press rounded-full p-3"
+              style={tab === id ? { background: A.hex, color: "#fff", boxShadow: `0 0 14px ${A.soft}` } : { color: textSoft }}>
+              <Icon size={18} />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+              }
+
