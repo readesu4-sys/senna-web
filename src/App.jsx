@@ -36,7 +36,7 @@ const GREETS = {
 };
 
 const SENNA_SERVER_URL = "https://senna-server-production.up.railway.app";
-const APP_SECRET = "senna-x7Qz2vLpR9mK4tNw";
+const APP_SECRET = "sennasecret123";
 const USER_ID = "hp-user-1"; // bebas, ini id device/user kamu
 
 const authHeaders = {
@@ -417,4 +417,4 @@ export default function App() {
       </div>
     </div>
   );
-                                             }
+}
