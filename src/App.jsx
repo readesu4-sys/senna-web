@@ -35,7 +35,7 @@ const GREETS = {
   ru: "Хмф... я Сенна. Не то чтобы я рада с тобой говорить, но... ладно, чего тебе надо?",
 };
 
-const SENNA_SERVER_URL = "https://senna-server-production.up.railway.app";
+const SENNA_SERVER_URL = "https://senna-server-production.up.railway.app/";
 const APP_SECRET = "sennasecret123";
 const USER_ID = "hp-user-1"; // bebas, ini id device/user kamu
 
