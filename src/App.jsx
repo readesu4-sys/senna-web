@@ -1,5 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Send, Settings, Brain, MessageCircle, Moon, Sun, Trash2, Sparkles, X, Loader2 } from "lucide-react";
+
+// Icon SVG sederhana buatan sendiri - nggak pakai library luar sama sekali,
+// biar nggak ada lagi kemungkinan error dari dependency pihak ketiga.
+const iconProps = (size) => ({ width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round" });
+const Send = ({ size = 16 }) => (<svg {...iconProps(size)}><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>);
+const Settings = ({ size = 16 }) => (<svg {...iconProps(size)}><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>);
+const Brain = ({ size = 16 }) => (<svg {...iconProps(size)}><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" /><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" /></svg>);
+const MessageCircle = ({ size = 16 }) => (<svg {...iconProps(size)}><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>);
+const Moon = ({ size = 16 }) => (<svg {...iconProps(size)}><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>);
+const Sun = ({ size = 16 }) => (<svg {...iconProps(size)}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>);
+const Trash2 = ({ size = 16 }) => (<svg {...iconProps(size)}><polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>);
+const Sparkles = ({ size = 16 }) => (<svg {...iconProps(size)}><path d="m12 3-1.9 4.9L5 10l5.1 2.1L12 17l1.9-4.9L19 10l-5.1-2.1Z" /></svg>);
+const X = ({ size = 16 }) => (<svg {...iconProps(size)}><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>);
+const Loader2 = ({ size = 16, className }) => (<svg {...iconProps(size)} className={className}><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>);
 
 const ACCENTS = {
   amethyst: { name: "Amethyst", hex: "#A78BFA", soft: "rgba(167,139,250,0.35)" },
@@ -105,11 +118,11 @@ export default function App() {
     link.href = "https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap";
     document.head.appendChild(link);
     (async () => {
-      // accent & dark mode cuma preferensi tampilan lokal, cukup disimpan di artifact storage
+      // accent & dark mode cuma preferensi tampilan lokal, cukup disimpan di localStorage HP
       try {
-        const savedUi = await window.storage.get("senna-ui-prefs");
+        const savedUi = localStorage.getItem("senna-ui-prefs");
         if (savedUi) {
-          const d = JSON.parse(savedUi.value);
+          const d = JSON.parse(savedUi);
           if (d.accent) setAccent(d.accent);
           if (typeof d.dark === "boolean") setDark(d.dark);
         }
@@ -134,7 +147,7 @@ export default function App() {
 
   useEffect(() => {
     if (!ready) return;
-    window.storage.set("senna-ui-prefs", JSON.stringify({ accent, dark })).catch(() => {});
+    localStorage.setItem("senna-ui-prefs", JSON.stringify({ accent, dark }));
   }, [accent, dark, ready]);
 
   // Setiap level/lang berubah di Settings tab, langsung PATCH ke server
@@ -379,30 +392,4 @@ export default function App() {
 
             <div className="rounded-2xl p-4 flex items-center justify-between" style={glass}>
               <span className="text-xs" style={{ color: textSoft }}>Mode</span>
-              <button onClick={() => setDark((d) => !d)} className="press rounded-full p-2" style={{ background: "rgba(128,128,128,0.15)" }}>
-                {dark ? <Moon size={16} /> : <Sun size={16} />}
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Floating glass bottom nav */}
-      <div className="w-full max-w-md px-6 pb-6 pt-3 relative z-10">
-        <div className="flex justify-around items-center rounded-full py-2 px-2" style={{ ...glass, boxShadow: "0 8px 30px rgba(0,0,0,0.25)" }}>
-          {[
-            { id: "chat", icon: MessageCircle },
-            { id: "memory", icon: Brain },
-            { id: "settings", icon: Settings },
-          ].map(({ id, icon: Icon }) => (
-            <button key={id} onClick={() => setTab(id)} className="press rounded-full p-3"
-              style={tab === id ? { background: A.hex, color: "#fff", boxShadow: `0 0 14px ${A.soft}` } : { color: textSoft }}>
-              <Icon size={18} />
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-  
+              <button onClick={() => setDark((d) => !d)} className="press rounded-full p-2" style={{ background: "rgba(128,128,128,
