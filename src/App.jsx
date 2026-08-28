@@ -195,7 +195,7 @@ export default function App() {
       setMood("blush");
       setTimeout(() => setMood("neutral"), 2500);
     } catch (e) {
-      setMessages((m) => [...m, { id: Date.now() + 1, sender: "ai", text: "Ugh... koneksinya bermasalah. Coba lagi, jangan salahkan aku." }]);
+      setMessages((m) => [...m, { id: Date.now() + 1, sender: "ai", text: `Ugh... koneksinya bermasalah. Coba lagi, jangan salahkan aku.\n\n[DEBUG: ${e.message}]` }]);
       setMood("annoyed");
     } finally {
       setLoading(false);
@@ -417,4 +417,4 @@ export default function App() {
       </div>
     </div>
   );
-}
+                                             }
